@@ -11,4 +11,8 @@ This project is part of Chapter II of Rockeseat's Ignite Journey
 - [TypeScript](https://www.typescriptlang.org/)
 - [CRA as Boilerplate](https://create-react-app.dev/)
 
+---
+
+Made with ♥ by Felipe Austríaco :wave: [Get in touch!](https://felipeaustriaco.dev/)
+
 
