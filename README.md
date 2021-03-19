@@ -1,5 +1,10 @@
 <h1 align="center">dt money</h1>
 
+<p align="center">
+  <img alt="Github top language" src="https://img.shields.io/github/languages/top/w1redl4in/dt-money" />
+  <img alt="Github last commit" src="https://img.shields.io/github/last-commit/w1redl4in/dt-money" />
+</p>
+
 ## :fire: Ignite Rocketseat Journey
 
 This project is part of Chapter II of Rockeseat's Ignite Journey
