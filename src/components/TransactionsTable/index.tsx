@@ -1,8 +1,9 @@
 import { useTransactionsHook } from '../../TransactionsContext';
 import { Container } from './styles';
+import Skeleton from 'react-loading-skeleton';
 
 export const TransactionsTable: React.FC = () => {
-  const { transactions } = useTransactionsHook();
+  const { transactions, isLoading } = useTransactionsHook();
 
   return (
     <Container>
@@ -16,19 +17,27 @@ export const TransactionsTable: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {transactions?.map((transaction) => (
+          {transactions.map((transaction) => (
             <tr key={transaction.id}>
-              <td>{transaction.title}</td>
+              <td>{isLoading ? <Skeleton /> : transaction.title}</td>
               <td className={transaction.type}>
-                {new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                }).format(transaction.amount)}
+                {isLoading ? (
+                  <Skeleton />
+                ) : (
+                  new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  }).format(transaction.amount)
+                )}
               </td>
-              <td>{transaction.category}</td>
+              <td>{isLoading ? <Skeleton /> : transaction.category}</td>
               <td>
-                {new Intl.DateTimeFormat('pt-BR').format(
-                  new Date(transaction.createdAt)
+                {isLoading ? (
+                  <Skeleton />
+                ) : (
+                  new Intl.DateTimeFormat('pt-BR').format(
+                    new Date(transaction.createdAt)
+                  )
                 )}
               </td>
             </tr>

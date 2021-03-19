@@ -15,7 +15,7 @@ export const NewTransactionModal: React.FC<NewTransactionModalProps> = ({
   isOpen,
   onRequestClose,
 }) => {
-  const { createTransaction } = useTransactionsHook();
+  const { createTransaction, isLoading } = useTransactionsHook();
 
   const [type, setType] = useState('deposit');
   const [title, setTitle] = useState('');
@@ -26,14 +26,20 @@ export const NewTransactionModal: React.FC<NewTransactionModalProps> = ({
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      createTransaction({
+      await createTransaction({
         amount,
         category,
         title,
         type,
       });
+
+      setTitle('');
+      setAmount(0);
+      setCategory('');
+      setType('deposit');
+      onRequestClose();
     },
-    [amount, category, createTransaction, title, type]
+    [amount, category, createTransaction, onRequestClose, title, type]
   );
 
   return (
@@ -88,7 +94,9 @@ export const NewTransactionModal: React.FC<NewTransactionModalProps> = ({
           value={category}
           onChange={(event) => setCategory(event.target.value)}
         />
-        <button type="submit">Cadastrar</button>
+        <button type="submit">
+          {isLoading ? 'Carregando...' : 'Cadastrar'}
+        </button>
       </Container>
     </Modal>
   );

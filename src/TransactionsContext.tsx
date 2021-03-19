@@ -21,6 +21,7 @@ type TransactionInput = Omit<ITransaction, 'id' | 'createdAt'>;
 type TransactionsContextState = {
   transactions: ITransaction[];
   createTransaction: (trasaction: TransactionInput) => Promise<void>;
+  isLoading: boolean;
 };
 
 export const TransactionsContext = createContext<TransactionsContextState>(
@@ -29,14 +30,25 @@ export const TransactionsContext = createContext<TransactionsContextState>(
 
 export const TransactionsProvider: React.FC = ({ children }) => {
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleTransactions = useCallback(async () => {
+    setIsLoading((prevState) => !prevState);
     const response = await api.get('/transactions');
     setTransactions(response.data.transactions);
+    setIsLoading((prevState) => !prevState);
   }, []);
 
-  const createTransaction = async (trasaction: TransactionInput) => {
-    await api.post('transactions', trasaction);
+  const createTransaction = async (transactionInput: TransactionInput) => {
+    setIsLoading((prevState) => !prevState);
+    const response = await api.post('transactions', {
+      ...transactionInput,
+      createdAt: new Date(),
+    });
+    const { transaction } = response.data;
+
+    setTransactions([...transactions, transaction]);
+    setIsLoading((prevState) => !prevState);
   };
 
   useEffect(() => {
@@ -44,7 +56,9 @@ export const TransactionsProvider: React.FC = ({ children }) => {
   }, [handleTransactions]);
 
   return (
-    <TransactionsContext.Provider value={{ transactions, createTransaction }}>
+    <TransactionsContext.Provider
+      value={{ transactions, createTransaction, isLoading }}
+    >
       {children}
     </TransactionsContext.Provider>
   );
