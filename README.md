@@ -5,6 +5,8 @@
   <img alt="Github last commit" src="https://img.shields.io/github/last-commit/w1redl4in/dt-money" />
 </p>
 
+![App Screenshot](https://cdn.discordapp.com/attachments/723249940423507998/822327746205450250/unknown.png)
+
 ## :fire: Ignite Rocketseat Journey
 
 This project is part of Chapter II of Rockeseat's Ignite Journey
