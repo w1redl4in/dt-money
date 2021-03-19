@@ -1,27 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useTransactionsHook } from '../../TransactionsContext';
 import { Container } from './styles';
-import { api } from '../../services/api';
-
-type ITransaction = {
-  id: number;
-  title: string;
-  type: string;
-  category: string;
-  amount: number;
-  createdAt: string;
-};
 
 export const TransactionsTable: React.FC = () => {
-  const [transactions, setTransactions] = useState<ITransaction[]>([]);
-
-  const handleTransactions = useCallback(async () => {
-    const response = await api.get('/transactions');
-    setTransactions(response.data.transactions);
-  }, []);
-
-  useEffect(() => {
-    handleTransactions();
-  }, [handleTransactions]);
+  const transactions = useTransactionsHook();
 
   return (
     <Container>
