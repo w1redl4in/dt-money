@@ -4,7 +4,7 @@ import CloseImage from '../../assets/close.svg';
 import IncomeImage from '../../assets/income.svg';
 import OutcomeImage from '../../assets/outcome.svg';
 import { useCallback, useState } from 'react';
-import { api } from '../../services/api';
+import { useTransactionsHook } from '../../TransactionsContext';
 
 type NewTransactionModalProps = {
   isOpen: boolean;
@@ -15,6 +15,8 @@ export const NewTransactionModal: React.FC<NewTransactionModalProps> = ({
   isOpen,
   onRequestClose,
 }) => {
+  const { createTransaction } = useTransactionsHook();
+
   const [type, setType] = useState('deposit');
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState(0);
@@ -23,16 +25,15 @@ export const NewTransactionModal: React.FC<NewTransactionModalProps> = ({
   const handleCreateNewTransaction = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      const data = {
-        title,
+
+      createTransaction({
         amount,
         category,
+        title,
         type,
-      };
-
-      await api.post('transactions', data);
+      });
     },
-    [amount, category, title, type]
+    [amount, category, createTransaction, title, type]
   );
 
   return (
