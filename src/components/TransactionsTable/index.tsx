@@ -2,7 +2,7 @@ import { useTransactionsHook } from '../../TransactionsContext';
 import { Container } from './styles';
 
 export const TransactionsTable: React.FC = () => {
-  const transactions = useTransactionsHook();
+  const { transactions } = useTransactionsHook();
 
   return (
     <Container>
